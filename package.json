@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "rssviana-site",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
-  "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "description": "My own website",
+  "version": "0.2.0",
+  "author": "rssviana <ronanssviana@gmail.com>",
   "dependencies": {
     "gatsby": "^2.18.12",
     "gatsby-image": "^2.2.34",
@@ -34,13 +34,13 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "deploy--FORCED": "surge --project ./ --domain rssviana-website.surge.sh"
+    "deploy--FORCED": "surge --project ./ --domain rssviana.surge.sh"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/rssviana/rssviana-site"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/rssviana/rssviana-site/issues"
   }
 }
