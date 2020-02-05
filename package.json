@@ -19,7 +19,8 @@
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "surge": "^0.21.3"
   },
   "keywords": [
     "gatsby"
@@ -32,7 +33,8 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "deploy--FORCED": "surge --project ./ --domain rssviana-website.surge.sh"
   },
   "repository": {
     "type": "git",
