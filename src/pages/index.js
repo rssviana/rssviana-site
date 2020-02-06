@@ -1,14 +1,16 @@
-import React from "react"
-import { Link } from "gatsby"
+import Link from 'next/link'
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import { withRouter } from 'next/router';
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Hall" />
-    <Link to="/contacts/">Go to Contacts</Link>
-  </Layout>
-)
+const Index = () => {
+  return (
+    <>
+      <h1>Teste com Next JS funcionando!</h1>
+      <Link href="/others">
+        <a>Others</a>
+      </Link>
+    </>
+  )
+}
 
-export default IndexPage
+export default withRouter(Index)

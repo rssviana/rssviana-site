@@ -3,6 +3,7 @@
 /node_modules
 /public
 /.cache
+.next/
 
 # Compiled Object files
 *.slo

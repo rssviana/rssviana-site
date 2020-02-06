@@ -1,46 +1,28 @@
 {
   "name": "rssviana-site",
-  "private": true,
-  "description": "My own website",
-  "version": "0.2.0",
-  "author": "rssviana <ronanssviana@gmail.com>",
-  "dependencies": {
-    "gatsby": "^2.18.12",
-    "gatsby-image": "^2.2.34",
-    "gatsby-plugin-manifest": "^2.2.31",
-    "gatsby-plugin-offline": "^3.0.27",
-    "gatsby-plugin-react-helmet": "^3.1.16",
-    "gatsby-plugin-sharp": "^2.3.5",
-    "gatsby-source-filesystem": "^2.1.40",
-    "gatsby-transformer-sharp": "^2.3.7",
-    "prop-types": "^15.7.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-helmet": "^5.2.1"
-  },
-  "devDependencies": {
-    "prettier": "^1.19.1",
-    "surge": "^0.21.3"
-  },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
+  "version": "1.0.0",
+  "description": "Just a nice website.",
+  "main": "index.js",
   "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "deploy--FORCED": "surge --project ./ --domain rssviana.surge.sh"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next ./src",
+    "build": "next build ./src",
+    "export": "next export ./src",
+    "start": "next start ./src"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rssviana/rssviana-site"
+    "url": "git+https://github.com/rssviana/rssviana-site.git"
   },
+  "author": "rssviana",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/rssviana/rssviana-site/issues"
+  },
+  "homepage": "https://github.com/rssviana/rssviana-site#readme",
+  "dependencies": {
+    "next": "^9.2.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   }
 }
