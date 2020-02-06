@@ -1,5 +1,10 @@
 #CHANGELOG 
 
+## [unreleased]
+
+### Changed
+ - change domain form surge sh and specifies the sys
+
 ## [0.2.0](https://github.com/rssviana/rssviana-site/tree/v0.2.0) - 2020-02-05
 
 ### Added

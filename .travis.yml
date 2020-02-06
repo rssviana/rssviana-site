@@ -1,4 +1,5 @@
 language: node_js
+os: linux
 node_js: 
 - 12.14.1
 cache: npm
@@ -16,9 +17,9 @@ script:
 # before_deploy:
 deploy:
   provider: surge
-  skip-cleanup: true
+  cleanup: true
   project: ./public/
-  domain: rssviana-website.surge.sh
+  domain: rssviana.surge.sh
   on:
     branch: master
 # after_deploy:
