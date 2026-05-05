@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@rssviana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #F6F5F2;
+    --bg2: #eceae6;
+    --fg: #1a1a1a;
+    --muted: #8a8480;
+    --accent: oklch(55% 0.08 60);
+    --card: #eeecea;
+    --border: rgba(26,26,26,0.10);
+  }
+
+  [data-dark] {
+    --bg: #232323;
+    --bg2: #2c2c2c;
+    --fg: #F6F5F2;
+    --muted: #7a7672;
+    --card: #2e2e2e;
+    --border: rgba(246,245,242,0.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Libre Caslon Display', Georgia, serif;
+    background-color: var(--bg);
+    color: var(--fg);
+    transition: background-color 0.4s, color 0.4s;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    padding: 20px 40px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.4s;
+  }
+
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .handle {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: lowercase;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav a {
+    font-family: 'Libre Caslon Display', Georgia, serif;
+    font-size: 15px;
+    color: var(--fg);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0; right: 0;
+    height: 1px;
+    background: var(--fg);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+  }
+
+  nav a:hover::after { transform: scaleX(1); }
+
+  .dark-toggle {
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'Libre Caslon Display', Georgia, serif;
+    font-style: italic;
+    transition: color 0.2s;
+  }
+
+  .dark-toggle:hover { color: var(--fg); }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 40px; }
+
+  .inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* ── HERO ── */
+  #inicio {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  /* Stacked cards visual */
+  .card-stack {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    margin: 0 auto;
+  }
+
+  .card-stack .card {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    transition: background 0.4s;
+  }
+
+  .card-stack .card:nth-child(1) {
+    transform: rotate(-5deg) translate(-8px, 8px);
+    opacity: 0.45;
+  }
+  .card-stack .card:nth-child(2) {
+    transform: rotate(-2deg) translate(-2px, 3px);
+    opacity: 0.7;
+  }
+  .card-stack .card:nth-child(3) {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .eyebrow {
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-size: 42px;
+    line-height: 1.15;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .link-underline {
+    font-size: 14px;
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--muted);
+    transition: text-decoration-color 0.2s;
+    cursor: pointer;
+  }
+
+  .link-underline:hover {
+    text-decoration-color: var(--fg);
+  }
+
+  /* ── SOBRE MIM ── */
+  #sobre {
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    font-style: italic;
+    max-width: 520px;
+    margin: 0 auto 36px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .tag {
+    font-size: 13px;
+    padding: 7px 18px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    font-style: italic;
+  }
+
+  /* ── MEUS 2 CENTAVOS ── */
+  #centavos { border-top: 1px solid var(--border); }
+
+  .section-label {
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 40px;
+  }
+
+  .article-card {
+    padding: 36px 40px;
+    background: var(--card);
+    transition: background 0.2s;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .article-card:hover { background: var(--bg2); }
+
+  .article-meta {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .article-title {
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 1.3;
+    text-wrap: pretty;
+  }
+
+  .article-excerpt {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── BYTEFOTOS ── */
+  #bytefotos { border-top: 1px solid var(--border); }
+
+  .photos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 40px;
+  }
+
+  .photos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+
+  .photo-slot {
+    aspect-ratio: 1;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    font-family: 'Courier New', monospace;
+    border: 1px solid var(--border);
+    text-align: center;
+    padding: 12px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .photo-slot:hover { opacity: 0.8; }
+
+  .photo-slot::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 6px,
+      var(--border) 6px,
+      var(--border) 7px
+    );
+    opacity: 0.4;
+  }
+
+  .photo-slot span {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── BYTECODE ── */
+  #bytecode {
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+    transition: background 0.4s;
+  }
+
+  .bytecode-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .bytecode-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .bytecode-services {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .service-item {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .service-item:first-child { border-top: 1px solid var(--border); }
+
+  .service-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--muted);
+    opacity: 0.5;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    text-align: center;
+  }
+
+  .footer-text {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    font-style: italic;
+  }
+
+  /* ── PHOTO MODAL ── */
+  #photo-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20,17,13,0.72);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 24px;
+  }
+
+  #photo-modal.open { display: flex; }
+
+  .modal-inner {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    max-width: 680px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    animation: modal-in 0.25s ease;
+  }
+
+  @keyframes modal-in {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--muted);
+    cursor: pointer;
+    line-height: 1;
+    z-index: 10;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--fg); }
+
+  .modal-photo {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .modal-photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 8px,
+      var(--border) 8px,
+      var(--border) 9px
+    );
+    opacity: 0.4;
+  }
+
+  .modal-photo span { position: relative; z-index: 1; }
+
+  .modal-body {
+    padding: 28px 36px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-meta {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .modal-title {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .modal-desc {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    font-style: italic;
+    text-wrap: pretty;
+  }
+
+  /* ── TWEAKS PANEL ── */
+  #tweaks-panel {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    width: 240px;
+    z-index: 999;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+  }
+
+  #tweaks-panel.open { display: block; }
+
+  .tweaks-title {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .tweak-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--fg);
+  }
+
+  .tweak-row input[type=range] { width: 100px; accent-color: var(--muted); }
+
+  .tweak-row select {
+    font-family: 'Libre Caslon Display', serif;
+    font-size: 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    padding: 3px 6px;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 640px) {
+    .hero-grid, .articles-grid, .photos-grid, .bytecode-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .card-stack { margin: 0 auto 20px; }
+    .photos-grid { grid-template-columns: repeat(2, 1fr); }
+    section { padding: 60px 24px; }
+    .hero-title { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <span class="handle">@rssviana</span>
+    <nav>
+      <a href="#inicio">Início</a>
+      <a href="centavos.html">Meus 2 centavos</a>
+      <a href="#bytecode">ByteCode</a>
+      <a href="#bytefotos">ByteFotos</a>
+      <button class="dark-toggle" onclick="toggleDark()">Dark</button>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="inner">
+    <div class="hero-grid">
+      <div class="card-stack">
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card">Hello World</div>
+      </div>
+      <div class="hero-text">
+        <span class="eyebrow">Desenvolvedor · Produtos digitais</span>
+        <h1 class="hero-title">Construindo produtos simples que realmente importam.</h1>
+        <p class="hero-sub">Focado em transformar ideias em experiências reais — com clareza, intenção e atenção aos detalhes.</p>
+        <a class="link-underline" href="#centavos">Ver: Por que simplicidade escala melhor →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE MIM -->
+<section id="sobre">
+  <div class="inner">
+    <h2 class="section-title">Sobre mim</h2>
+    <p class="section-sub">Desenvolvedor apaixonado por construir coisas simples e bem pensadas. Gosto de tecnologia, mas também de tudo que envolve criatividade, velocidade e boas histórias.</p>
+    <div class="tags">
+      <span class="tag">Fotografia</span>
+      <span class="tag">Cinema</span>
+      <span class="tag">Guitarra &amp; Violão</span>
+      <span class="tag">Kart</span>
+      <span class="tag">Fórmula 1</span>
+    </div>
+  </div>
+</section>
+
+<!-- MEUS 2 CENTAVOS -->
+<section id="centavos">
+  <div class="inner">
+    <p class="section-label">Meus 2 centavos</p>
+    <h2 class="section-title">Ideias em construção.</h2>
+    <p class="section-sub" style="margin-top:-8px;">Artigos curtos sobre tecnologia, processo criativo e o que aprendo no caminho.</p>
+
+    <div class="articles-grid">
+      <a href="artigo.html?id=0" class="article-card" style="text-decoration:none;color:inherit;">
+        <span class="article-meta">Jan 2026 · 4 min</span>
+        <h3 class="article-title">Por que simplicidade escala melhor</h3>
+        <p class="article-excerpt">O código mais elegante é aquele que não existe. Uma reflexão sobre remover em vez de adicionar.</p>
+      </a>
+      <a href="artigo.html?id=1" class="article-card" style="text-decoration:none;color:inherit;">
+        <span class="article-meta">Mar 2026 · 6 min</span>
+        <h3 class="article-title">Atenção é o recurso mais escasso</h3>
+        <p class="article-excerpt">O que aprendi tentando construir produtos que as pessoas realmente usam — e os que ignoram.</p>
+      </a>
+      <a href="artigo.html?id=2" class="article-card" style="text-decoration:none;color:inherit;">
+        <span class="article-meta">Abr 2026 · 3 min</span>
+        <h3 class="article-title">Velocidade como valor de design</h3>
+        <p class="article-excerpt">Performance não é detalhe técnico. É respeito ao tempo do usuário.</p>
+      </a>
+      <a href="centavos.html" class="article-card" style="text-decoration:none;color:inherit;justify-content:center; align-items:center; text-align:center; min-height:180px;">
+        <span class="article-meta" style="font-style:italic;">ver todos →</span>
+        <span class="article-excerpt" style="font-size:13px;">4 artigos publicados</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BYTEFOTOS -->
+<section id="bytefotos">
+  <div class="inner">
+    <div class="photos-header">
+      <div>
+        <p class="section-label">ByteFotos</p>
+        <h2 class="section-title" style="margin-bottom:0;">Frames do mundo real.</h2>
+      </div>
+      <a class="link-underline" href="#">Ver todas →</a>
+    </div>
+    <div class="photos-grid">
+      <div class="photo-slot" onclick="openPhoto(0)"><span>foto<br>paisagem</span></div>
+      <div class="photo-slot" onclick="openPhoto(1)"><span>foto<br>urbana</span></div>
+      <div class="photo-slot" onclick="openPhoto(2)"><span>foto<br>detalhe</span></div>
+      <div class="photo-slot" onclick="openPhoto(3)"><span>foto<br>luz natural</span></div>
+      <div class="photo-slot" onclick="openPhoto(4)"><span>foto<br>preto & branco</span></div>
+      <div class="photo-slot" onclick="openPhoto(5)"><span>foto<br>retrato</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BYTECODE -->
+<section id="bytecode">
+  <div class="bytecode-inner">
+    <div class="bytecode-text">
+      <p class="section-label">ByteCode</p>
+      <h2 class="section-title" style="font-size:36px;">Tecnologia feita com cuidado.</h2>
+      <p class="section-sub" style="text-align:left; margin:0;">Minha empresa de TI — projetos digitais com foco em clareza, entrega e resultado real para quem precisa.</p>
+      <a class="link-underline" href="#">Falar sobre um projeto →</a>
+    </div>
+    <div class="bytecode-services">
+      <div class="service-item"><span>Desenvolvimento web</span><span class="service-dot"></span></div>
+      <div class="service-item"><span>Produtos digitais</span><span class="service-dot"></span></div>
+      <div class="service-item"><span>Sistemas sob medida</span><span class="service-dot"></span></div>
+      <div class="service-item"><span>Consultoria técnica</span><span class="service-dot"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO MODAL -->
+<div id="photo-modal" onclick="closePhoto(event)">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closePhoto(null, true)">×</button>
+    <div class="modal-photo" id="modal-photo-img"></div>
+    <div class="modal-body">
+      <span class="modal-meta" id="modal-meta"></span>
+      <h3 class="modal-title" id="modal-title"></h3>
+      <p class="modal-desc" id="modal-desc"></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-text">@rssviana · feito de coração para as pessoas que gostam de mim '26</p>
+</footer>
+
+<!-- TWEAKS PANEL -->
+<div id="tweaks-panel">
+  <p class="tweaks-title">Tweaks</p>
+
+  <div class="tweak-row">
+    <label>Tamanho do texto</label>
+    <input type="range" min="14" max="20" value="16" step="1" oninput="setFontSize(this.value)">
+  </div>
+
+  <div class="tweak-row">
+    <label>Background</label>
+    <select onchange="setBg(this.value)">
+      <option value="#f0ebe2">Areia</option>
+      <option value="#e8e4f0">Lavanda</option>
+      <option value="#e4f0e8">Menta</option>
+      <option value="#f0e4e8">Rosa</option>
+    </select>
+  </div>
+
+  <div class="tweak-row">
+    <label>Espaçamento</label>
+    <input type="range" min="60" max="140" value="100" step="10" oninput="setSpacing(this.value)">
+  </div>
+</div>
+
+<script>
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "fontSize": 17,
+    "bgColor": "#f0ebe2",
+    "spacing": 110,
+    "dark": false
+  }/*EDITMODE-END*/;
+
+  let dark = TWEAK_DEFAULTS.dark;
+
+  function toggleDark() {
+    dark = !dark;
+    document.body.toggleAttribute('data-dark', dark);
+    document.querySelector('.dark-toggle').textContent = dark ? 'Light' : 'Dark';
+    postEdits({ dark });
+  }
+
+  function setFontSize(val) {
+    document.documentElement.style.setProperty('--base-size', val + 'px');
+    document.body.style.fontSize = val + 'px';
+    postEdits({ fontSize: Number(val) });
+  }
+
+  function setBg(val) {
+    document.documentElement.style.setProperty('--bg', val);
+    document.documentElement.style.setProperty('--bg2', shadeColor(val, -5));
+    document.documentElement.style.setProperty('--card', shadeColor(val, -3));
+    postEdits({ bgColor: val });
+  }
+
+  function setSpacing(val) {
+    document.querySelectorAll('section').forEach(s => {
+      s.style.paddingTop = val + 'px';
+      s.style.paddingBottom = val + 'px';
+    });
+    postEdits({ spacing: Number(val) });
+  }
+
+  function shadeColor(hex, pct) {
+    const n = parseInt(hex.slice(1), 16);
+    const r = Math.min(255, Math.max(0, (n >> 16) + pct * 2));
+    const g = Math.min(255, Math.max(0, ((n >> 8) & 0xff) + pct * 2));
+    const b = Math.min(255, Math.max(0, (n & 0xff) + pct * 2));
+    return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+  }
+
+  function postEdits(edits) {
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+  }
+
+  // Photo modal
+  const photos = [
+    { label: "Paisagem", meta: "ByteFotos · 2026", title: "Horizonte aberto", desc: "Aquele tipo de cena que faz você parar tudo. Uma tarde sem pressa, a câmera na mão e a sensação de que o mundo é maior do que parece." },
+    { label: "Urbana", meta: "ByteFotos · 2026", title: "Geometria da cidade", desc: "Ando muito pelas ruas prestando atenção nos ângulos que as pessoas não veem. Concreto também tem poesia." },
+    { label: "Detalhe", meta: "ByteFotos · 2026", title: "Perto do que importa", desc: "Aproximar a lente é uma forma de dizer: isso aqui merece atenção. Um detalhe que passa despercebido mas conta toda a história." },
+    { label: "Luz natural", meta: "ByteFotos · 2026", title: "A hora dourada", desc: "A luz do fim de tarde não perdoa e não mente. Tudo fica mais bonito — e mais real — quando o sol está prestes a ir embora." },
+    { label: "Preto & branco", meta: "ByteFotos · 2026", title: "Sem cor, mais forma", desc: "Tirar a cor obriga a olhar diferente. O que sobra é textura, contraste e intenção. É o modo mais honesto de fotografar." },
+    { label: "Retrato", meta: "ByteFotos · 2026", title: "Uma fração de segundo", desc: "Retratar alguém é um ato de confiança mútua. Essa foto nasceu de um momento espontâneo — sem pose, sem combinado." },
+  ];
+
+  function openPhoto(idx) {
+    const p = photos[idx];
+    document.getElementById('modal-photo-img').innerHTML = `<span>${p.label}</span>`;
+    document.getElementById('modal-meta').textContent = p.meta;
+    document.getElementById('modal-title').textContent = p.title;
+    document.getElementById('modal-desc').textContent = p.desc;
+    document.getElementById('photo-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePhoto(e, force) {
+    if (force || e.target === document.getElementById('photo-modal')) {
+      document.getElementById('photo-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closePhoto(null, true);
+  });
+
+  // Tweaks toggle
+  window.addEventListener('message', e => {
+    if (e.data?.type === '__activate_edit_mode') document.getElementById('tweaks-panel').classList.add('open');
+    if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').classList.remove('open');
+  });
+
+  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+
+  // Apply saved defaults
+  if (TWEAK_DEFAULTS.dark) {
+    document.body.setAttribute('data-dark', '');
+    document.querySelector('.dark-toggle').textContent = 'Light';
+  }
+  if (TWEAK_DEFAULTS.fontSize !== 16) setFontSize(TWEAK_DEFAULTS.fontSize);
+</script>
+</body>
+</html>

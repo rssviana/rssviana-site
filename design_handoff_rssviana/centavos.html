@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meus 2 centavos · @rssviana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #F6F5F2;
+    --bg2: #eceae6;
+    --fg: #1a1a1a;
+    --muted: #8a8480;
+    --card: #eeecea;
+    --border: rgba(26,26,26,0.10);
+  }
+  [data-dark] {
+    --bg: #232323;
+    --bg2: #2c2c2c;
+    --fg: #F6F5F2;
+    --muted: #7a7672;
+    --card: #2e2e2e;
+    --border: rgba(246,245,242,0.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Libre Caslon Display', Georgia, serif;
+    background-color: var(--bg);
+    color: var(--fg);
+    transition: background-color 0.4s, color 0.4s;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg);
+    padding: 20px 40px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.4s;
+  }
+  .header-inner {
+    max-width: 860px; margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .handle { font-size: 11px; letter-spacing: 0.18em; color: var(--muted); text-transform: lowercase; }
+  nav { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; justify-content: center; }
+  nav a {
+    font-family: 'Libre Caslon Display', Georgia, serif;
+    font-size: 15px; color: var(--fg); text-decoration: none; transition: color 0.2s;
+    position: relative;
+  }
+  nav a::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 1px; background: var(--fg); transform: scaleX(0); transition: transform 0.2s;
+  }
+  nav a:hover::after { transform: scaleX(1); }
+  nav a.active::after { transform: scaleX(1); }
+  .dark-toggle {
+    font-size: 13px; color: var(--muted); cursor: pointer;
+    background: none; border: none;
+    font-family: 'Libre Caslon Display', Georgia, serif;
+    font-style: italic; transition: color 0.2s;
+  }
+  .dark-toggle:hover { color: var(--fg); }
+
+  /* PAGE */
+  .page { max-width: 860px; margin: 0 auto; padding: 80px 40px 120px; }
+
+  .page-eyebrow {
+    font-size: 10.5px; letter-spacing: 0.22em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .page-title { font-size: 48px; line-height: 1.1; font-weight: 400; margin-bottom: 16px; }
+  .page-sub {
+    font-size: 17px; line-height: 1.75; color: var(--muted);
+    font-style: italic; max-width: 540px; margin-bottom: 64px;
+  }
+
+  /* FILTER */
+  .filters {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 48px;
+  }
+  .filter-btn {
+    font-family: 'Libre Caslon Display', serif; font-size: 13px;
+    padding: 7px 20px; border-radius: 100px; cursor: pointer;
+    border: 1px solid var(--border); background: none; color: var(--muted);
+    font-style: italic; transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--fg); color: var(--bg); border-color: var(--fg);
+  }
+
+  /* ARTICLES LIST */
+  .articles-list { display: flex; flex-direction: column; }
+
+  .article-row {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 32px;
+    align-items: start;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--fg);
+    transition: opacity 0.2s;
+  }
+  .article-row:first-child { border-top: 1px solid var(--border); }
+  .article-row:hover { opacity: 0.65; }
+
+  .article-num {
+    font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
+    padding-top: 4px; font-style: italic;
+  }
+
+  .article-info { display: flex; flex-direction: column; gap: 10px; }
+  .article-tag {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .article-title-row { font-size: 22px; line-height: 1.25; font-weight: 400; }
+  .article-excerpt-row {
+    font-size: 14px; line-height: 1.7; color: var(--muted); font-style: italic;
+    max-width: 520px; text-wrap: pretty;
+  }
+
+  .article-meta-right {
+    font-size: 12px; color: var(--muted); white-space: nowrap;
+    font-style: italic; padding-top: 4px; text-align: right;
+    display: flex; flex-direction: column; gap: 6px; align-items: flex-end;
+  }
+
+  .read-time {
+    font-size: 11px; letter-spacing: 0.06em; color: var(--muted);
+  }
+
+  .arrow { font-size: 18px; color: var(--muted); margin-top: 2px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 32px 40px; text-align: center; }
+  .footer-text { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; font-style: italic; }
+
+  @media (max-width: 640px) {
+    .article-row { grid-template-columns: 1fr; gap: 12px; }
+    .article-num { display: none; }
+    .article-meta-right { flex-direction: row; align-items: center; gap: 12px; }
+    .page-title { font-size: 34px; }
+    .page { padding: 60px 24px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="handle"><a href="index.html" style="color:inherit;text-decoration:none;">@rssviana</a></span>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="centavos.html" class="active">Meus 2 centavos</a>
+      <a href="index.html#bytecode">ByteCode</a>
+      <a href="index.html#bytefotos">ByteFotos</a>
+      <button class="dark-toggle" onclick="toggleDark()">Dark</button>
+    </nav>
+  </div>
+</header>
+
+<div class="page">
+  <p class="page-eyebrow">Meus 2 centavos</p>
+  <h1 class="page-title">Ideias em construção.</h1>
+  <p class="page-sub">Artigos curtos sobre tecnologia, processo criativo e o que aprendo no caminho.</p>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterBy('todos', this)">Todos</button>
+    <button class="filter-btn" onclick="filterBy('tecnologia', this)">Tecnologia</button>
+    <button class="filter-btn" onclick="filterBy('design', this)">Design</button>
+    <button class="filter-btn" onclick="filterBy('processo', this)">Processo</button>
+  </div>
+
+  <div class="articles-list" id="articles-list">
+    <a class="article-row" href="artigo.html?id=0" data-tag="tecnologia">
+      <span class="article-num">01</span>
+      <div class="article-info">
+        <span class="article-tag">Tecnologia</span>
+        <h2 class="article-title-row">Por que simplicidade escala melhor</h2>
+        <p class="article-excerpt-row">O código mais elegante é aquele que não existe. Uma reflexão sobre remover em vez de adicionar.</p>
+      </div>
+      <div class="article-meta-right">
+        <span>Jan 2026</span>
+        <span class="read-time">4 min</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-row" href="artigo.html?id=1" data-tag="processo">
+      <span class="article-num">02</span>
+      <div class="article-info">
+        <span class="article-tag">Processo</span>
+        <h2 class="article-title-row">Atenção é o recurso mais escasso</h2>
+        <p class="article-excerpt-row">O que aprendi tentando construir produtos que as pessoas realmente usam — e os que ignoram.</p>
+      </div>
+      <div class="article-meta-right">
+        <span>Mar 2026</span>
+        <span class="read-time">6 min</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-row" href="artigo.html?id=2" data-tag="design">
+      <span class="article-num">03</span>
+      <div class="article-info">
+        <span class="article-tag">Design</span>
+        <h2 class="article-title-row">Velocidade como valor de design</h2>
+        <p class="article-excerpt-row">Performance não é detalhe técnico. É respeito ao tempo do usuário.</p>
+      </div>
+      <div class="article-meta-right">
+        <span>Abr 2026</span>
+        <span class="read-time">3 min</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-row" href="artigo.html?id=3" data-tag="tecnologia">
+      <span class="article-num">04</span>
+      <div class="article-info">
+        <span class="article-tag">Tecnologia</span>
+        <h2 class="article-title-row">O mito do desenvolvedor 10x</h2>
+        <p class="article-excerpt-row">Produtividade não se mede em linhas de código. Mede-se nas decisões que você não precisou tomar.</p>
+      </div>
+      <div class="article-meta-right">
+        <span>Abr 2026</span>
+        <span class="read-time">5 min</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-text">@rssviana · feito de coração para as pessoas que gostam de mim '26</p>
+</footer>
+
+<script>
+  function toggleDark() {
+    const dark = document.body.toggleAttribute('data-dark');
+    document.querySelector('.dark-toggle').textContent = dark ? 'Light' : 'Dark';
+    localStorage.setItem('rssviana-dark', dark ? '1' : '');
+  }
+
+  function filterBy(tag, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.article-row').forEach(row => {
+      row.style.display = (tag === 'todos' || row.dataset.tag === tag) ? 'grid' : 'none';
+    });
+  }
+
+  // Persist dark
+  if (localStorage.getItem('rssviana-dark')) {
+    document.body.setAttribute('data-dark', '');
+    document.querySelector('.dark-toggle').textContent = 'Light';
+  }
+</script>
+</body>
+</html>

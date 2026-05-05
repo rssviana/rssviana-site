@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artigo · @rssviana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #F6F5F2;
+    --bg2: #eceae6;
+    --fg: #1a1a1a;
+    --muted: #8a8480;
+    --card: #eeecea;
+    --border: rgba(26,26,26,0.10);
+  }
+  [data-dark] {
+    --bg: #232323;
+    --bg2: #2c2c2c;
+    --fg: #F6F5F2;
+    --muted: #7a7672;
+    --card: #2e2e2e;
+    --border: rgba(246,245,242,0.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Libre Caslon Display', Georgia, serif;
+    background-color: var(--bg);
+    color: var(--fg);
+    transition: background-color 0.4s, color 0.4s;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg);
+    padding: 20px 40px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.4s;
+  }
+  .header-inner {
+    max-width: 860px; margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .handle { font-size: 11px; letter-spacing: 0.18em; color: var(--muted); text-transform: lowercase; }
+  nav { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; justify-content: center; }
+  nav a {
+    font-family: 'Libre Caslon Display', Georgia, serif;
+    font-size: 15px; color: var(--fg); text-decoration: none; transition: color 0.2s;
+    position: relative;
+  }
+  nav a::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 1px; background: var(--fg); transform: scaleX(0); transition: transform 0.2s;
+  }
+  nav a:hover::after { transform: scaleX(1); }
+  .dark-toggle {
+    font-size: 13px; color: var(--muted); cursor: pointer;
+    background: none; border: none;
+    font-family: 'Libre Caslon Display', Georgia, serif;
+    font-style: italic; transition: color 0.2s;
+  }
+  .dark-toggle:hover { color: var(--fg); }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed; top: 0; left: 0;
+    height: 2px; background: var(--muted);
+    width: 0%; z-index: 200;
+    transition: width 0.1s linear;
+  }
+
+  /* ARTICLE */
+  .article-wrap {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 80px 40px 140px;
+  }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    font-style: italic; margin-bottom: 64px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--fg); }
+
+  .article-tag {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 20px; display: block;
+  }
+
+  .article-title {
+    font-size: 44px; line-height: 1.1; font-weight: 400;
+    margin-bottom: 24px; text-wrap: pretty;
+  }
+
+  .article-byline {
+    display: flex; align-items: center; gap: 20px;
+    padding: 20px 0; border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 56px;
+    font-size: 13px; color: var(--muted); font-style: italic;
+  }
+
+  .byline-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border); }
+
+  /* BODY TEXT */
+  .article-body {
+    font-size: 18px;
+    line-height: 1.85;
+    color: var(--fg);
+  }
+
+  .article-body p { margin-bottom: 28px; text-wrap: pretty; }
+
+  .article-body h2 {
+    font-size: 26px; font-weight: 400;
+    margin: 56px 0 20px; line-height: 1.2;
+  }
+
+  .article-body blockquote {
+    border-left: 2px solid var(--muted);
+    padding-left: 28px;
+    margin: 40px 0;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .article-body hr {
+    border: none; border-top: 1px solid var(--border);
+    margin: 56px auto; width: 80px;
+  }
+
+  /* END */
+  .article-end {
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .end-label { font-size: 12px; letter-spacing: 0.12em; color: var(--muted); font-style: italic; }
+
+  .next-article {
+    font-size: 15px; color: var(--fg); text-decoration: none;
+    font-style: italic; transition: opacity 0.2s;
+  }
+  .next-article:hover { opacity: 0.6; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 32px 40px; text-align: center; }
+  .footer-text { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; font-style: italic; }
+
+  @media (max-width: 640px) {
+    .article-title { font-size: 30px; }
+    .article-wrap { padding: 60px 24px 100px; }
+    .article-body { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<header>
+  <div class="header-inner">
+    <span class="handle"><a href="index.html" style="color:inherit;text-decoration:none;">@rssviana</a></span>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="centavos.html">Meus 2 centavos</a>
+      <a href="index.html#bytecode">ByteCode</a>
+      <a href="index.html#bytefotos">ByteFotos</a>
+      <button class="dark-toggle" onclick="toggleDark()">Dark</button>
+    </nav>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <a class="back-link" href="centavos.html">← Meus 2 centavos</a>
+
+  <span class="article-tag" id="art-tag">Tecnologia</span>
+  <h1 class="article-title" id="art-title">Por que simplicidade escala melhor</h1>
+
+  <div class="article-byline">
+    <span>rssviana</span>
+    <span class="byline-dot"></span>
+    <span id="art-date">Janeiro de 2026</span>
+    <span class="byline-dot"></span>
+    <span id="art-read">4 min de leitura</span>
+  </div>
+
+  <div class="article-body" id="art-body">
+    <!-- content injected by JS -->
+  </div>
+
+  <div class="article-end">
+    <span class="end-label">Fim do artigo.</span>
+    <a class="next-article" href="#" id="next-link">Próximo →</a>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-text">@rssviana · feito de coração para as pessoas que gostam de mim '26</p>
+</footer>
+
+<script>
+  const articles = [
+    {
+      id: 0,
+      tag: "Tecnologia",
+      title: "Por que simplicidade escala melhor",
+      date: "Janeiro de 2026",
+      read: "4 min de leitura",
+      body: `
+        <p>Existe uma crença persistente no mundo do desenvolvimento de software de que complexidade é sinal de competência. Quanto mais camadas, mais abstrações, mais padrões de arquitetura — mais sério parece o trabalho. Eu já pensei assim. Me enganei.</p>
+
+        <p>A verdade é o oposto: o código mais elegante é aquele que não existe.</p>
+
+        <h2>O custo invisível de cada linha</h2>
+
+        <p>Cada linha de código que você escreve é uma linha que precisa ser lida, mantida e eventualmente deletada. Quando você adiciona algo desnecessário, não está apenas adicionando código — está adicionando carga cognitiva para todo mundo que vai tocar naquele sistema depois de você, incluindo você mesmo daqui a seis meses.</p>
+
+        <blockquote>Simplicidade é a sofisticação máxima. Não porque seja fácil de atingir, mas porque exige muito mais julgamento do que complexidade.</blockquote>
+
+        <p>O problema é que remover é mais difícil do que adicionar. Adicionar parece produtivo. Remove parece que você está andando para trás. Mas a maior parte do trabalho de engenharia de verdade é resistência — resistir à tentação de resolver problemas que não existem ainda.</p>
+
+        <h2>Quando escala de verdade</h2>
+
+        <p>Um sistema simples escala de três formas que um sistema complexo não consegue. Primeiro, é mais fácil de entender — qualquer pessoa pode pegar e continuar. Segundo, é mais fácil de mudar — você não precisa rastrear dependências em cinco camadas para alterar um comportamento. Terceiro, é mais fácil de confiar — você sabe o que está acontecendo.</p>
+
+        <p>Isso não significa fazer menos. Significa fazer exatamente o necessário com precisão cirúrgica. É uma habilidade que se desenvolve com tempo, erro e muita humildade.</p>
+
+        <hr>
+
+        <p>Da próxima vez que você for adicionar algo, pare e pergunte: o que acontece se eu não adicionar isso? Se a resposta for "nada", você acabou de encontrar a decisão certa.</p>
+      `
+    },
+    {
+      id: 1,
+      tag: "Processo",
+      title: "Atenção é o recurso mais escasso",
+      date: "Março de 2026",
+      read: "6 min de leitura",
+      body: `
+        <p>A gente fala muito sobre tempo. Pouco sobre atenção. E são coisas completamente diferentes.</p>
+
+        <p>Tempo é democrático — todo mundo tem vinte e quatro horas. Atenção é outra história. É finita, se fragmenta com facilidade, e uma vez perdida, custa caro recuperar. O verdadeiro problema de produtividade da nossa era não é ter pouco tempo. É ter pouca atenção.</p>
+
+        <h2>O que aprendi construindo produtos</h2>
+
+        <p>Quando comecei a construir produtos digitais, meu foco estava em funcionalidades. Mais features, mais valor — parecia lógico. Mas o que eu percebi, com o tempo, é que os produtos que as pessoas realmente usam são os que respeitam a atenção delas.</p>
+
+        <blockquote>Um produto que exige pouco para entregar muito é raro. E é exatamente por isso que quando você encontra um, não larga mais.</blockquote>
+
+        <p>Isso muda tudo sobre como você projeta. A pergunta não é "o que mais posso adicionar?". É "o que posso remover para que a coisa certa apareça com mais clareza?".</p>
+
+        <h2>Atenção como ato de design</h2>
+
+        <p>Cada notificação desnecessária, cada modal que interrompe, cada passo a mais num fluxo — tudo isso está consumindo algo que o usuário não vai recuperar. E em algum momento, ele vai embora.</p>
+
+        <p>Os produtos que sobrevivem são os que tratam a atenção do usuário como o recurso mais precioso que existe. Porque é exatamente isso que ela é.</p>
+
+        <hr>
+
+        <p>Proteja sua atenção. E proteja a atenção de quem usa o que você constrói.</p>
+      `
+    },
+    {
+      id: 2,
+      tag: "Design",
+      title: "Velocidade como valor de design",
+      date: "Abril de 2026",
+      read: "3 min de leitura",
+      body: `
+        <p>Performance não é detalhe técnico. É respeito ao tempo do usuário.</p>
+
+        <p>Quando um produto é lento, a mensagem implícita é: o meu tempo vale mais que o seu. Pode não ser intencional, mas é o que a experiência comunica. E experiências comunicam mais do que qualquer copy ou visual.</p>
+
+        <h2>Velocidade como intenção</h2>
+
+        <p>Os produtos mais amados do mundo têm uma coisa em comum: eles respondem. Você clica, acontece. Você digita, aparece. Não há lacuna entre intenção e resultado. Isso cria uma sensação de controle, de fluidez, de que a ferramenta está do seu lado.</p>
+
+        <blockquote>Um produto rápido não precisa ser bonito para parecer bom. Mas um produto lento dificilmente compensa com visual.</blockquote>
+
+        <p>Quando você trata velocidade como decisão de design — não como otimização posterior — você começa a tomar decisões diferentes. Você questiona cada dependência, cada requisição, cada animação.</p>
+
+        <h2>O que muda na prática</h2>
+
+        <p>Na prática, isso significa que performance entra no processo desde o começo. Não é uma tarefa de sprint final. É um valor que permeia cada decisão: qual biblioteca usar, como estruturar o dado, o que renderizar primeiro.</p>
+
+        <hr>
+
+        <p>Velocidade é design. Trate como tal.</p>
+      `
+    },
+    {
+      id: 3,
+      tag: "Tecnologia",
+      title: "O mito do desenvolvedor 10x",
+      date: "Abril de 2026",
+      read: "5 min de leitura",
+      body: `
+        <p>O conceito de desenvolvedor 10x surgiu de um estudo dos anos 60 e nunca mais nos deixou. A ideia de que existem pessoas que produzem dez vezes mais que a média. É sedutora. É também, na maior parte dos casos, uma distorção perigosa.</p>
+
+        <p>Produtividade não se mede em linhas de código. Mede-se nas decisões que você não precisou tomar.</p>
+
+        <h2>O que define um desenvolvedor excepcional</h2>
+
+        <p>O desenvolvedor que realmente acelera um time não é necessariamente o que codifica mais rápido. É o que faz as perguntas certas antes de começar, que questiona se o problema precisa ser resolvido da forma que foi pedido, que simplifica antes de construir.</p>
+
+        <blockquote>A diferença entre um desenvolvedor bom e um ótimo está frequentemente no que ele decide não fazer.</blockquote>
+
+        <p>Esse tipo de julgamento é difícil de cultivar e impossível de medir em métricas simples. É o motivo pelo qual times que otimizam por velocidade bruta frequentemente produzem sistemas que ninguém consegue manter.</p>
+
+        <h2>O custo do mito</h2>
+
+        <p>Quando você persegue o ideal do desenvolvedor 10x, você cria uma cultura que valoriza a performance individual sobre a clareza coletiva. E clareza coletiva é o que sustenta um produto por anos, não meses.</p>
+
+        <p>O desenvolvedor que você quer no seu time não é o herói. É o que faz todo mundo trabalhar melhor.</p>
+
+        <hr>
+
+        <p>Menos mito, mais colaboração. O software mais duradouro que conheço foi construído assim.</p>
+      `
+    }
+  ];
+
+  function getArticleId() {
+    const params = new URLSearchParams(window.location.search);
+    return parseInt(params.get('id') || '0', 10);
+  }
+
+  function loadArticle() {
+    const id = getArticleId();
+    const art = articles[id] || articles[0];
+    const next = articles[(id + 1) % articles.length];
+
+    document.title = art.title + ' · @rssviana';
+    document.getElementById('art-tag').textContent = art.tag;
+    document.getElementById('art-title').textContent = art.title;
+    document.getElementById('art-date').textContent = art.date;
+    document.getElementById('art-read').textContent = art.read;
+    document.getElementById('art-body').innerHTML = art.body;
+    document.getElementById('next-link').textContent = next.title + ' →';
+    document.getElementById('next-link').href = 'artigo.html?id=' + next.id;
+  }
+
+  // Reading progress
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+    document.getElementById('progress').style.width = (scrolled * 100) + '%';
+  });
+
+  function toggleDark() {
+    const dark = document.body.toggleAttribute('data-dark');
+    document.querySelector('.dark-toggle').textContent = dark ? 'Light' : 'Dark';
+    localStorage.setItem('rssviana-dark', dark ? '1' : '');
+  }
+
+  // Init
+  loadArticle();
+
+  if (localStorage.getItem('rssviana-dark')) {
+    document.body.setAttribute('data-dark', '');
+    document.querySelector('.dark-toggle').textContent = 'Light';
+  }
+</script>
+</body>
+</html>
